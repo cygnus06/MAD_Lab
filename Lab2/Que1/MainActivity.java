@@ -2,16 +2,18 @@
 //<activity android:name=".SecondActivity" />
 package com.example.app1;
 
-import javax.swing.text.View;
+package com.example.lifecycleexample;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
+    
     private static final String TAG = "Lifecycle";
     private TextView lifecycleTextView;
 
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         lifecycleTextView = findViewById(R.id.lifecycleTextView);
         Button buttonNextActivity = findViewById(R.id.buttonNextActivity);
 
