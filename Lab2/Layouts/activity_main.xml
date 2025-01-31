@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000">
+
+    <!-- Horizontal Row of Colored Blocks -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:layout_weight="1"
+            android:background="#FF0000"
+            android:gravity="center"
+            android:text="red"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:layout_weight="1"
+            android:background="#00FF00"
+            android:gravity="center"
+            android:text="green"
+            android:textColor="#616161" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:layout_weight="1"
+            android:background="#0000FF"
+            android:text="blue"
+            android:textColor="#FFF"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:layout_weight="1"
+            android:background="#FFFF00"
+            android:gravity="center"
+            android:text="yellow"
+            android:textColor="#5C6BC0" />
+    </LinearLayout>
+
+    <!-- Vertical Row of Text Rows -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="row one"
+        android:textSize="24sp"
+        android:textColor="#FFF"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="row two"
+        android:textSize="24sp"
+        android:textColor="#FFF"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="row three"
+        android:textSize="24sp"
+        android:textColor="#FFF"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="row four"
+        android:textSize="24sp"
+        android:textColor="#FFF"
+        android:padding="10dp" />
+
+</LinearLayout>
