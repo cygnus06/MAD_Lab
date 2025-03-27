@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Movie Ticket Booking</string>
+
+    <string name="select_movie">Select Movie</string>
+    <string name="select_theatre">Select Theatre</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
+
+    <string name="ticket_type">Premium Ticket</string>
+    <string name="book_now">Book Now</string>
+    <string name="reset">Reset</string>
+
+    <string name="booking_successful">Booking Successful</string>
+    <string name="please_fill_all_fields">Please fill all fields</string>
+    <string name="premium_booking_restriction">Premium tickets can only be booked after 12 PM</string>
+</resources>

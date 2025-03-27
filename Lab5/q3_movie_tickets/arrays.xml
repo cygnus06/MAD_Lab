@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="movies">
+        <item>Avengers: Endgame</item>
+        <item>Interstellar</item>
+        <item>Inception</item>
+        <item>Spider-Man: No Way Home</item>
+        <item>The Dark Knight</item>
+        <item>Avatar: The Way of Water</item>
+    </string-array>
+
+    <string-array name="theatres">
+        <item>IMAX Cinema</item>
+        <item>PVR Cinemas</item>
+        <item>Cinepolis</item>
+        <item>INOX</item>
+        <item>AMC Theatres</item>
+        <item>Regal Cinemas</item>
+    </string-array>
+</resources>
+<!-- paste this in values-->

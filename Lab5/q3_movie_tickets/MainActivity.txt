@@ -1,0 +1,139 @@
+package com.example.lab4;
+
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+
+import android.widget.Spinner;
+import android.widget.Toast;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+
+import android.widget.TextView;
+
+
+import android.widget.Switch;
+
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity {
+    private Spinner movieSpinner, theatreSpinner;
+    private TextView dateTextView, timeTextView;
+    private Button bookNowButton, resetButton;
+    private Switch ticketSwitch;
+    private Calendar selectedDateTime;
+    private boolean isPremiumSelected = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        movieSpinner = findViewById(R.id.movieSpinner);
+        theatreSpinner = findViewById(R.id.theatreSpinner);
+        dateTextView = findViewById(R.id.dateTextView);
+        timeTextView = findViewById(R.id.timeTextView);
+        bookNowButton = findViewById(R.id.bookNowButton);
+        resetButton = findViewById(R.id.resetButton);
+        ticketSwitch = findViewById(R.id.ticketSwitch);
+
+        selectedDateTime = Calendar.getInstance();
+
+        ArrayAdapter<CharSequence> movieAdapter = ArrayAdapter.createFromResource(this,
+                R.array.movies, android.R.layout.simple_spinner_item);
+        movieAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        movieSpinner.setAdapter(movieAdapter);
+
+        ArrayAdapter<CharSequence> theatreAdapter = ArrayAdapter.createFromResource(this,
+                R.array.theatres, android.R.layout.simple_spinner_item);
+        theatreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        theatreSpinner.setAdapter(theatreAdapter);
+
+        dateTextView.setOnClickListener(v -> showDatePicker());
+        timeTextView.setOnClickListener(v -> showTimePicker());
+
+        ticketSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isPremiumSelected = isChecked;
+            checkBookingEligibility();
+        });
+
+        bookNowButton.setOnClickListener(v -> bookTicket());
+        resetButton.setOnClickListener(v -> resetFields());
+
+        checkBookingEligibility();
+    }
+
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePicker = new DatePickerDialog(this,
+                (view, year, month, dayOfMonth) -> {
+                    selectedDateTime.set(year, month, dayOfMonth);
+                    dateTextView.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePicker.show();
+    }
+
+    private void showTimePicker() {
+        Calendar calendar = Calendar.getInstance();
+        TimePickerDialog timePicker = new TimePickerDialog(this,
+                (view, hourOfDay, minute) -> {
+                    selectedDateTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    selectedDateTime.set(Calendar.MINUTE, minute);
+                    timeTextView.setText(String.format("%02d:%02d", hourOfDay, minute));
+                    checkBookingEligibility();
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true);
+        timePicker.show();
+    }
+
+    private void checkBookingEligibility() {
+        int selectedHour = selectedDateTime.get(Calendar.HOUR_OF_DAY);
+        if (isPremiumSelected && selectedHour < 12) {
+            bookNowButton.setEnabled(false);
+            Toast.makeText(this, "Premium tickets can only be booked after 12 PM", Toast.LENGTH_SHORT).show();
+        } else {
+            bookNowButton.setEnabled(true);
+        }
+    }
+
+    private void bookTicket() {
+        String movie = movieSpinner.getSelectedItem().toString();
+        String theatre = theatreSpinner.getSelectedItem().toString();
+        String date = dateTextView.getText().toString();
+        String time = timeTextView.getText().toString();
+        String ticketType = isPremiumSelected ? "Premium" : "Standard";
+
+        if (movie.isEmpty() || theatre.isEmpty() || date.equals("Select Date") || time.equals("Select Time")) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(this, ConfirmationActivity.class);
+        intent.putExtra("movie", movie);
+        intent.putExtra("theatre", theatre);
+        intent.putExtra("date", date);
+        intent.putExtra("time", time);
+        intent.putExtra("ticketType", ticketType);
+        startActivity(intent);
+    }
+
+    private void resetFields() {
+        movieSpinner.setSelection(0);
+        theatreSpinner.setSelection(0);
+        selectedDateTime = Calendar.getInstance();
+        dateTextView.setText("Select Date");
+        timeTextView.setText("Select Time");
+        ticketSwitch.setChecked(false);
+        checkBookingEligibility();
+    }
+}

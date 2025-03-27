@@ -1,0 +1,47 @@
+package com.example.lab4; 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.lab4.R;
+
+import java.util.UUID;
+
+public class ConfirmationActivity extends AppCompatActivity {
+    private TextView detailsTextView;
+    private Button confirmButton, editButton;
+    private String vehicleType, vehicleNumber, rcNumber;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_confirmation);
+
+        detailsTextView = findViewById(R.id.detailsTextView);
+        confirmButton = findViewById(R.id.confirmButton);
+        editButton = findViewById(R.id.editButton);
+
+        Intent intent = getIntent();
+        vehicleType = intent.getStringExtra("vehicleType");
+        vehicleNumber = intent.getStringExtra("vehicleNumber");
+        rcNumber = intent.getStringExtra("rcNumber");
+
+        detailsTextView.setText("Vehicle Type: " + vehicleType + "\n" +
+                "Vehicle Number: " + vehicleNumber + "\n" +
+                "RC Number: " + rcNumber);
+
+        confirmButton.setOnClickListener(v -> confirmRegistration());
+        editButton.setOnClickListener(v -> finish());
+    }
+
+    private void confirmRegistration() {
+        String uniqueSerial = UUID.randomUUID().toString().substring(0, 8);
+        Toast.makeText(this, "Registration Successful! Serial: " + uniqueSerial, Toast.LENGTH_LONG).show();
+        setResult(RESULT_OK);
+        finish();
+    }
+}
