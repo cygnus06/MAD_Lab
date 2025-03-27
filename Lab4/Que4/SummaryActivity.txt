@@ -1,0 +1,38 @@
+// put this file in android manifest activity tag
+package com.example.lab4;
+
+import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+
+public class SummaryActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_summary);
+
+        LinearLayout orderSummaryContainer = findViewById(R.id.orderSummaryContainer);
+
+        ArrayList<String> selectedItems = getIntent().getStringArrayListExtra("selectedItems");
+        ArrayList<Integer> selectedPrices = getIntent().getIntegerArrayListExtra("selectedPrices");
+        int totalCost = getIntent().getIntExtra("totalCost", 0);
+
+        if (selectedItems != null && selectedPrices != null) {
+            for (int i = 0; i < selectedItems.size(); i++) {
+                TextView itemView = new TextView(this);
+                itemView.setText(selectedItems.get(i) + " - $" + selectedPrices.get(i));
+                orderSummaryContainer.addView(itemView);
+            }
+        }
+
+        TextView totalView = new TextView(this);
+        totalView.setText("Total Cost: $" + totalCost);
+        totalView.setTextSize(18);
+        orderSummaryContainer.addView(totalView);
+    }
+}
+

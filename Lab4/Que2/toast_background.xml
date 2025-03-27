@@ -1,0 +1,6 @@
+<!-- Instruction -> insert cupcake.png to ice_cream_sandwich.png in the drawablw folder. Also this too-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="10dp"/>
+    <solid android:color="#333333"/>
+    <padding android:left="10dp" android:top="10dp" android:right="10dp" android:bottom="10dp"/>
+</shape>

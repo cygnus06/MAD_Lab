@@ -1,0 +1,102 @@
+package com.example.lab4;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+/*
+ * MainActivity.java
+ * This is the main activity of the Test App.
+ * It contains a Button and a ToggleButton.
+ * When clicked, each button displays a custom Toast with an image.
+ */
+/*
+ * MainActivity.java
+ * This app displays multiple buttons labeled with Android versions.
+ * When clicked, each button shows a Toast message with the Android version name and icon.
+ */
+
+/*
+ * MainActivity.java
+ * This app contains a ToggleButton labeled "Current Mode" and a Button labeled "Change Mode".
+ * The toggle button switches between "Wi-Fi" and "Mobile Data" modes.
+ * The selected mode updates the image and displays a Toast message.
+ */
+
+
+
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    private ToggleButton toggleButton;
+    private ImageView modeImage;
+    private Button changeModeButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Reference UI elements
+        toggleButton = findViewById(R.id.toggleButton);
+        modeImage = findViewById(R.id.mode_image);
+        changeModeButton = findViewById(R.id.change_mode_button);
+
+        // Initial mode setup
+        updateMode(toggleButton.isChecked());
+
+        // Toggle button listener
+        toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> updateMode(isChecked));
+
+        // Change Mode button listener
+        changeModeButton.setOnClickListener(v -> {
+            toggleButton.setChecked(!toggleButton.isChecked());
+            updateMode(toggleButton.isChecked());
+        });
+    }
+
+    // Method to update the UI based on the selected mode
+    private void updateMode(boolean isWifi) {
+        if (isWifi) {
+            modeImage.setImageResource(R.drawable.wifi_icon);
+            showCustomToast("Wi-Fi Mode Enabled", R.drawable.wifi_icon);
+        } else {
+            modeImage.setImageResource(R.drawable.mobile_data_icon);
+            showCustomToast("Mobile Data Mode Enabled", R.drawable.mobile_data_icon);
+        }
+    }
+
+    // Method to show a custom Toast with an image
+    private void showCustomToast(String message, int imageResId) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_root));
+
+        // Set the text and image in the custom Toast
+        TextView text = layout.findViewById(R.id.toast_text);
+        text.setText(message);
+        ImageView image = layout.findViewById(R.id.toast_image);
+        image.setImageResource(imageResId);
+
+        // Create and show the Toast
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+}

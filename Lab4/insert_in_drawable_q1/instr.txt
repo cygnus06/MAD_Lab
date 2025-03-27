@@ -1,0 +1,4 @@
+insert 3 images in drawable
+image1.png
+image2.png
+image3.png
