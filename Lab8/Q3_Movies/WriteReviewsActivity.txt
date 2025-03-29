@@ -1,0 +1,54 @@
+package com.example.moviereviewapp;
+
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class WriteReviewActivity extends AppCompatActivity {
+    DatabaseHelper databaseHelper;
+    EditText movieNameInput, yearInput, reviewInput;
+    Spinner ratingSpinner;
+    Button saveReviewButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_write_review);
+
+        databaseHelper = new DatabaseHelper(this);
+        movieNameInput = findViewById(R.id.movieNameInput);
+        yearInput = findViewById(R.id.yearInput);
+        reviewInput = findViewById(R.id.reviewInput);
+        ratingSpinner = findViewById(R.id.ratingSpinner);
+        saveReviewButton = findViewById(R.id.saveReviewButton);
+
+        saveReviewButton.setOnClickListener(v -> saveReview());
+    }
+
+    private void saveReview() {
+        String movieName = movieNameInput.getText().toString().trim();
+        int year = Integer.parseInt(yearInput.getText().toString().trim());
+        String reviewText = reviewInput.getText().toString().trim();
+        int rating = Integer.parseInt(ratingSpinner.getSelectedItem().toString());
+
+        if (movieName.isEmpty() || reviewText.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        boolean inserted = databaseHelper.insertReview(movieName, year, reviewText, rating);
+        if (inserted) {
+            Toast.makeText(this, "Review saved!", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Error saving review!", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+

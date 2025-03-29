@@ -1,0 +1,5 @@
+<activity android:name=".WriteReviewActivity"/>
+        <activity android:name=".ViewReviewsActivity"/>
+        <activity android:name=".MovieDetailsActivity"/>
+        <activity android:name=".ManageReviewsActivity"/>
+        <activity android:name=".EditReviewActivity"/>
