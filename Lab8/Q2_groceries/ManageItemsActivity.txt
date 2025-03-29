@@ -1,0 +1,92 @@
+package com.example.lab8_q2;
+
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+public class ManageItemsActivity extends AppCompatActivity {
+    DatabaseHelper databaseHelper;
+    ListView manageListView;
+    ArrayList<HashMap<String, String>> itemList = new ArrayList<>();
+    TextView categoryTotalText;  // ✅ Declare it as a class variable
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_manage_task_items);
+
+        databaseHelper = new DatabaseHelper(this);
+        manageListView = findViewById(R.id.manageListView);
+        categoryTotalText = findViewById(R.id.categoryTotalText);  // ✅ Initialize here
+
+        loadItems();
+        updateCategoryTotal();
+
+        manageListView.setOnItemClickListener((parent, view, position, id) -> {
+            HashMap<String, String> selectedItem = itemList.get(position);
+            int itemId = Integer.parseInt(selectedItem.get("id"));
+            String itemName = selectedItem.get("item");
+
+            showEditDeleteDialog(itemId, itemName);
+        });
+    }
+
+    private void updateCategoryTotal() {  // No need to pass TextView now
+        HashMap<String, Double> categoryTotals = databaseHelper.getCategoryTotal();
+        StringBuilder totalText = new StringBuilder("Category-wise Total:\n");
+
+        for (String category : categoryTotals.keySet()) {
+            totalText.append(category).append(": $").append(categoryTotals.get(category)).append("\n");
+        }
+
+        categoryTotalText.setText(totalText.toString());  // ✅ No error now
+    }
+
+    private void loadItems() {
+        Cursor cursor = databaseHelper.getAllItems();
+        itemList.clear();
+
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String category = cursor.getString(1);
+            String item = cursor.getString(2);
+            double price = cursor.getDouble(3);
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("id", String.valueOf(id));
+            map.put("category", category);
+            map.put("item", item + " - $" + price);
+            itemList.add(map);
+        }
+
+        SimpleAdapter adapter = new SimpleAdapter(this, itemList, android.R.layout.simple_list_item_2,
+                new String[]{"category", "item"}, new int[]{android.R.id.text1, android.R.id.text2});
+        manageListView.setAdapter(adapter);
+    }
+
+    private void showEditDeleteDialog(int itemId, String itemName) {
+        new AlertDialog.Builder(this)
+                .setTitle("Manage Item")
+                .setMessage("Do you want to edit or delete " + itemName + "?")
+                .setPositiveButton("Edit", (dialog, which) -> {
+                    Toast.makeText(this, "Edit function coming soon!", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Delete", (dialog, which) -> {
+                    databaseHelper.deleteItem(itemId);
+                    loadItems();
+                    updateCategoryTotal();  // ✅ Now categoryTotalText is accessible
+                })
+                .setNeutralButton("Cancel", null)
+                .show();
+    }
+}
