@@ -1,25 +1,9 @@
 <resources>
-    <string-array name="categories">
-        <item>Fruits</item>
-        <item>Vegetables</item>
-        <item>Liquids</item>
-    </string-array>
-
-    <string-array name="fruits">
-        <item>Apple - $2.00</item>
-        <item>Banana - $1.00</item>
-        <item>Grapes - $3.00</item>
-    </string-array>
-
-    <string-array name="vegetables">
-        <item>Carrot - $1.50</item>
-        <item>Potato - $2.00</item>
-        <item>Tomato - $2.50</item>
-    </string-array>
-
-    <string-array name="liquids">
-        <item>Milk - $4.00</item>
-        <item>Juice - $3.50</item>
-        <item>Water - $1.00</item>
+    <string-array name="rating_options">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 </resources>

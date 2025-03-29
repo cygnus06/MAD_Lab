@@ -6,44 +6,32 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <Spinner
-        android:id="@+id/categorySpinner"
+    <ListView
+        android:id="@+id/movieListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp" />
+        android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/itemSpinner"
+    <Button
+        android:id="@+id/writeReviewButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="48dp" />
-
-    <TextView
-        android:id="@+id/priceText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Price: $"
+        android:text="Write a Review"
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/viewReviewsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add to Database"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/viewTotalButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Total"
+        android:text="View Reviews"
         tools:ignore="HardcodedText" />
     <Button
-        android:id="@+id/manageItemsButton"
+        android:id="@+id/manageReviewsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Manage Items"
+        android:text="Manage My Reviews"
+        android:layout_marginTop="16dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
         tools:ignore="HardcodedText" />
+
+
 </LinearLayout>
